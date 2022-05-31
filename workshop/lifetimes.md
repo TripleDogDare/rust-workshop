@@ -145,9 +145,9 @@ type FunTrait2 = dyn for<'a> Fn(&'a str) -> &'a str;  // expanded
 
 ---
 
-A regular reference is a type of pointer, and one way to think of a pointer is
-as an arrow to a value stored somewhere else. In Listing 15-6, we create a
-reference to an i32 value and then use the dereference operator to follow the
+A regular reference (`&`) is a type of pointer, and one way to think of a pointer is
+as an arrow to a value stored somewhere else. In the snippet below, we create a
+reference to an `i32` value and then use the dereference operator to follow the
 reference to the data:
 
 Filename: src/main.rs
@@ -176,6 +176,19 @@ fn main() {
     println!("{r1}, {r2}, and {r3}");
 ```
 
+---
+
+Anantomy of a rust function:
+
+```rust
+pub fn some_func<'lifetime, Type>(parameter: &'lifetime Type) -> Wrapper<&'lifetime Type>
+where Type: Debug
+{
+    Wrapper::new(parameter)
+}
+```
+
+---
 
 # Resources
 [Lifetimes](https://doc.rust-lang.org/stable/book/ch10-03-lifetime-syntax.html)

@@ -10,3 +10,4 @@
 
 * VSCode rust-analyzer
 
+* https://cheats.rs/

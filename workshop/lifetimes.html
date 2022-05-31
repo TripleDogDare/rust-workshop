@@ -136,9 +136,9 @@ phase of execution of a computer program</p>
 </span></span></foreignObject></svg></code></pre>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9">
-<p>A regular reference is a type of pointer, and one way to think of a pointer is<br />
-as an arrow to a value stored somewhere else. In Listing 15-6, we create a<br />
-reference to an i32 value and then use the dereference operator to follow the<br />
+<p>A regular reference (<code>&amp;</code>) is a type of pointer, and one way to think of a pointer is<br />
+as an arrow to a value stored somewhere else. In the snippet below, we create a<br />
+reference to an <code>i32</code> value and then use the dereference operator to follow the<br />
 reference to the data:</p>
 <p>Filename: src/main.rs</p>
 <pre><code class="language-rust"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
@@ -160,6 +160,17 @@ reference to the data:</p>
 
     <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;{r1}, {r2}, and {r3}&quot;</span>);
 </span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11">
+<p>Anantomy of a rust function:</p>
+<pre><code class="language-rust"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap><span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">some_func</span></span>&lt;<span class="hljs-symbol">&#x27;lifetime</span>, Type&gt;(parameter: &amp;<span class="hljs-symbol">&#x27;lifetime</span> Type) -&gt; Wrapper&lt;&amp;<span class="hljs-symbol">&#x27;lifetime</span> Type&gt;
+<span class="hljs-keyword">where</span> Type: <span class="hljs-built_in">Debug</span>
+{
+    Wrapper::new(parameter)
+}
+</span></span></foreignObject></svg></code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12">
 <h1>Resources</h1>
 <p><a href="https://doc.rust-lang.org/stable/book/ch10-03-lifetime-syntax.html">Lifetimes</a><br />
 <a href="https://github.com/dtolnay/cargo-expand">Cargo Expand</a></p>
