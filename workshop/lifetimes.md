@@ -42,6 +42,39 @@ phase of execution of a computer program
 
 ---
 
+```rust
+// raii.rs
+fn create_box() {
+    // Allocate an integer on the heap
+    let _box1 = Box::new(3);
+
+    // `_box1` is destroyed here, and memory gets freed
+}
+
+fn main() {
+    // Allocate an integer on the heap
+    let _box2 = Box::new(5);
+
+    // A nested scope:
+    {
+        // Allocate an integer on the heap
+        let _box3 = Box::new(4);
+
+        // `_box3` is destroyed here, and memory gets freed
+    }
+
+    // Creating lots of boxes just for fun
+    // There's no need to manually free memory!
+    for _ in 0..1_000 {
+        create_box();
+    }
+
+    // `_box2` is destroyed here, and memory gets freed
+}
+```
+
+---
+
 [Borrowing](https://doc.rust-lang.org/stable/book/ch10-03-lifetime-syntax.html)
 
 ```rust
@@ -58,6 +91,8 @@ phase of execution of a computer program
 
 ```
 
+Annotations of the lifetimes of `r` and `x`, named `'a` and `'b`, respectively
+
 ---
 
 [Elision](https://doc.rust-lang.org/rust-by-example/scope/lifetime/elision.html)
@@ -70,12 +105,61 @@ fn longest<'a>(x: &'a str, y: &str) -> &'a str {
 
 ---
 
+```rust
+fn print1(s: &str);                                   // elided
+fn print2(s: &'_ str);                                // also elided
+fn print3<'a>(s: &'a str);                            // expanded
+
+fn debug1(lvl: usize, s: &str);                       // elided
+fn debug2<'a>(lvl: usize, s: &'a str);                // expanded
+
+fn substr1(s: &str, until: usize) -> &str;            // elided
+fn substr2<'a>(s: &'a str, until: usize) -> &'a str;  // expanded
+
+fn get_mut1(&mut self) -> &mut dyn T;                 // elided
+fn get_mut2<'a>(&'a mut self) -> &'a mut dyn T;       // expanded
+
+fn args1<T: ToCStr>(&mut self, args: &[T]) -> &mut Command;                  // elided
+fn args2<'a, 'b, T: ToCStr>(&'a mut self, args: &'b [T]) -> &'a mut Command; // expanded
+
+fn new1(buf: &mut [u8]) -> Thing<'_>;                 // elided - preferred
+fn new2(buf: &mut [u8]) -> Thing;                     // elided
+fn new3<'a>(buf: &'a mut [u8]) -> Thing<'a>;          // expanded
+
+type FunPtr1 = fn(&str) -> &str;                      // elided
+type FunPtr2 = for<'a> fn(&'a str) -> &'a str;        // expanded
+
+type FunTrait1 = dyn Fn(&str) -> &str;                // elided
+type FunTrait2 = dyn for<'a> Fn(&'a str) -> &'a str;  // expanded
+```
+
+---
+
 [Mutability](https://doc.rust-lang.org/stable/book/ch03-01-variables-and-mutability.html)
 
 ```rust
 &i32        // a reference
 &'a i32     // a reference with an explicit lifetime
 &'a mut i32 // a mutable reference with an explicit lifetime
+```
+
+---
+
+A regular reference is a type of pointer, and one way to think of a pointer is
+as an arrow to a value stored somewhere else. In Listing 15-6, we create a
+reference to an i32 value and then use the dereference operator to follow the
+reference to the data:
+
+Filename: src/main.rs
+
+```rust
+fn main() {
+    let x = 5;
+    let y = &x;
+
+    assert_eq!(5, x);
+    assert_eq!(5, *y);
+}
 ```
 
 ---
@@ -92,7 +176,6 @@ fn longest<'a>(x: &'a str, y: &str) -> &'a str {
     println!("{r1}, {r2}, and {r3}");
 ```
 
-#### Listing 10-18: Annotations of the lifetimes of r and x, named 'a and 'b, respectively
 
 # Resources
 [Lifetimes](https://doc.rust-lang.org/stable/book/ch10-03-lifetime-syntax.html)
