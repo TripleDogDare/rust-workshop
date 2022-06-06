@@ -1,8 +1,8 @@
 ## Resources
 
-* [Go ↔ Rust patterns](https://programming-idioms.org/cheatsheet/Go/Rust)
+* [Go ⃕ Rust patterns](https://programming-idioms.org/cheatsheet/Go/Rust)
 
-* [Javascript ↔ Rust patterns](https://programming-idioms.org/cheatsheet/JS/Rust)
+* [Javascript ⃕ Rust patterns](https://programming-idioms.org/cheatsheet/JS/Rust)
 
 * [VSCode rust-analyzer](https://code.visualstudio.com/docs/languages/rust)
 
