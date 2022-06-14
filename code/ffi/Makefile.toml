@@ -1,0 +1,51 @@
+[tasks.ffi-header-mkdir]
+workspace = false
+command = "mkdir"
+args = ["-p", "./headers"]
+
+[tasks.ffi-header]
+dependencies = ["ffi-header-mkdir"]
+workspace = false
+command = "cargo"
+args = ["test", "--manifest-path", "./Cargo.toml", "--features", "c-headers", "--", "generate_headers"]
+
+[tasks.ffi-dylib-default]
+workspace = false
+command = "cargo"
+args = ["build", "--manifest-path", "./Cargo.toml"]
+
+[tasks.ffi-add-library-path]
+linux_alias = "ffi-add-library-path-linux"
+
+[tasks.ffi-add-library-path-linux]
+command = "sudo"
+args = ["ldconfig", "${CARGO_MAKE_WORKING_DIRECTORY}/../target/debug/"]
+
+[tasks.ffi-test-builder]
+dependencies = ["ffi-header", "ffi-dylib-default", "ffi-add-library-path"]
+command = "cc"
+args = [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Wpointer-arith",
+    "-Wcast-align",
+    "-Wwrite-strings",
+    "-Wswitch-default",
+    "-Wunreachable-code",
+    "-Winit-self",
+    "-Wmissing-field-initializers",
+    "-Wno-unknown-pragmas",
+    "-Wstrict-prototypes",
+    "-Wundef",
+    "-Wold-style-definition",
+    "${CARGO_MAKE_WORKING_DIRECTORY}/tests-c/main.c",
+    "-I${CARGO_MAKE_WORKING_DIRECTORY}/headers/",
+    "-L${CARGO_MAKE_WORKING_DIRECTORY}/../target/debug/",
+    "-lffi_example",
+    "-o${CARGO_MAKE_WORKING_DIRECTORY}/../target/debug/ffi-test"
+]
+
+[tasks.ffi-test]
+dependencies = ["ffi-test-builder"]
+command = "${CARGO_MAKE_WORKING_DIRECTORY}/../target/debug/ffi-test"
