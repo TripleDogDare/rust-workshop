@@ -1,6 +1,6 @@
-Workshops:
-1. https://www.rust-lang.org/learn/get-started
-2.
+Workshop Pages:
+https://knox-networks.github.io/rust-workshop/
+
 
 ## Resources
 
@@ -14,9 +14,9 @@ Workshops:
 * [cheats.rs](https://cheats.rs)
 * [rust-concurrency](https://github.com/quambene/rust-concurrency)
 
-## Quickref:
+## Debugging Quickref:
 
-* `dbg!()` macro
+* [`dbg!()`](https://doc.rust-lang.org/std/macro.dbg.html) macro for more accurate `println!`
 
 ```rust
 let a = 2;
@@ -25,7 +25,9 @@ let b = dbg!(a * 2) + 1;
 assert_eq!(b, 5);
 ```
 
-* `cargo test -- --nocapture`
+```sh
+$ cargo test -- --nocapture
+```
 
 ```rust
 #[test]
@@ -34,6 +36,3 @@ fn test() {
               then I will print to stdout");
 }
 ```
-
-# Resources
-
