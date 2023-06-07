@@ -178,7 +178,7 @@ fn main() {
 
 ---
 
-Anantomy of a rust function:
+Anatomy of a rust function:
 
 ```rust
 pub fn some_func<'lifetime, Type>(parameter: &'lifetime Type) -> Wrapper<&'lifetime Type>
